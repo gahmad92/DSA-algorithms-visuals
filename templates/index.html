@@ -1,0 +1,196 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting and Searching Algorithms</title>
+    <script>
+        async function submitForm() {
+            const array = document.getElementById("array").value.split(",").map(Number);
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+            const algorithm = document.getElementById("algorithm").value;
+            const number = operation === "searching" ? Number(document.getElementById("number").value) : null;
+            
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ array, operation, algorithm, number })
+            });
+            
+            const data = await response.json();
+            document.getElementById("result").innerText = `Result: ${JSON.stringify(data.result)}, Time: ${data.time} seconds`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Sorting and Searching Algorithms</h1>
+    <label>Enter Array: <input type="text" id="array" placeholder="e.g., 4,3,2,1"></label><br>
+    <label>Operation:
+        <input type="radio" name="operation" value="sorting" checked> Sorting
+        <input type="radio" name="operation" value="searching"> Searching<br>
+    </label>
+   
+    <label>Algorithm:</label>
+    <select aria-label="state" id="algorithm">
+        <option value="bubble_sort">Bubble Sort</option>
+        <option value="merge_sort">Merge Sort</option>
+        <option value="selection_sort">Selection Sort</option>
+        <option value="linear_search">Linear Search</option>
+        <option value="binary_search">Binary Search</option>
+    </select><br>
+    <label>Number to Search (if applicable): <input type="number" id="number"></label><br>
+    <button type="button" onclick="submitForm()">Submit</button>
+    <p id="result"></p>
+    <p id="result" class="result"></p>
+
+</body>
+</html> -->
+
+<!--  
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting and Searching Algorithms</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        async function submitForm() {
+            const array = document.getElementById("array").value.split(",").map(Number);
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+            const algorithm = document.getElementById("algorithm").value;
+            const number = operation === "searching" ? Number(document.getElementById("number").value) : null;
+
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ array, operation, algorithm, number })
+            });
+
+            const data = await response.json();
+            console.log(JSON.stringify(data.result.result));
+            
+            document.getElementById("result").innerHTML = `Result: ${JSON.stringify(data.result.result)}</br> Steps:${JSON.stringify(data.result.steps)}</br>  Time: ${data.time} seconds`;
+
+
+
+           
+        }
+    </script>
+</head>
+<body>
+    <h1>Lets do Sorting and Searching with me </h1>
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <div>
+            <label for="array">Enter Array:</label>
+            <input type="text" id="array" placeholder="e.g., 4,3,2,1">
+        </div>
+        
+        <fieldset>
+            <legend>Operation:</legend>
+            <label>
+                <input type="radio" name="operation" value="sorting" checked> Sorting
+            </label>
+            <label>
+                <input type="radio" name="operation" value="searching"> Searching
+            </label>
+        </fieldset>
+        
+        <div>
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm">
+                <option value="bubble_sort">Bubble Sort</option>
+                <option value="merge_sort">Merge Sort</option>
+                <option value="selection_sort">Selection Sort</option>
+                <option value="linear_search">Linear Search</option>
+                <option value="binary_search">Binary Search</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="number">Number to Search (if applicable):</label>
+            <input type="number" id="number">
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result" class="result"></p>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting and Searching Algorithms</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function toggleNumberInput() {
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+            const numberInputDiv = document.getElementById("numberInputDiv");
+            if (operation === "searching") {
+                numberInputDiv.style.display = "block";
+            } else {
+                numberInputDiv.style.display = "none";
+            }
+        }
+
+        async function submitForm() {
+            const array = document.getElementById("array").value.split(",").map(Number);
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+            const algorithm = document.getElementById("algorithm").value;
+            const number = operation === "searching" ? Number(document.getElementById("number").value) : null;
+
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ array, operation, algorithm, number })
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerHTML = `Result: ${JSON.stringify(data.result.result)}<br> Steps: ${JSON.stringify(data.result.steps)}<br> Time: ${data.time} seconds`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Sorting and Searching Algorithms</h1>
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <div>
+            <label for="array">Enter Array:</label>
+            <input type="text" id="array" placeholder="e.g., 4,3,2,1">
+        </div>
+
+        <fieldset>
+            <legend>Operation:</legend>
+            <label>
+                <input type="radio" name="operation" value="sorting" checked onchange="toggleNumberInput()"> Sorting
+            </label>
+            <label>
+                <input type="radio" name="operation" value="searching" onchange="toggleNumberInput()"> Searching
+            </label>
+        </fieldset>
+
+        <div>
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm">
+                <option value="bubble_sort">Bubble Sort</option>
+                <option value="merge_sort">Merge Sort</option>
+                <option value="selection_sort">Selection Sort</option>
+                <option value="linear_search">Linear Search</option>
+                <option value="binary_search">Binary Search</option>
+            </select>
+        </div>
+
+        <div id="numberInputDiv" style="display: none;">
+            <label for="number">Number to Search:</label>
+            <input type="number" id="number">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result" class="result"></p>
+</body>
+</html>
